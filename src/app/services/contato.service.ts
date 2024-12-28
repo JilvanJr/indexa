@@ -10,7 +10,7 @@ export class ContatoService {
 
   private readonly API = 'http://localhost:3000/contatos'
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   obterContatos(): Observable<Contato[]> {
     return this.http.get<Contato[]>(this.API);
@@ -23,5 +23,10 @@ export class ContatoService {
   buscarPorId(id: number): Observable<Contato> {
     const url = `${this.API}/${id}`
     return this.http.get<Contato>(url)
-}
+  }
+
+  excluirContato(id: number): Observable<Contato> {
+    const url = `${this.API}/${id}`
+    return this.http.delete<Contato>(url)
+  }
 }
