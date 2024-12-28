@@ -2,12 +2,12 @@
     <header>
         <section class="cabecalho-link">
             <img src="../../../assets/logo.png" alt="">
-        <div>
-            <button>
-              <img class="seta" src="../../../assets/arrow-left.png" alt="">
-              <a routerLink="/lista-contatos">Voltar</a>
-            </button>
-          </div>
+            <div>
+                <button>
+                    <img class="seta" src="../../../assets/arrow-left.png" alt="">
+                    <a routerLink="/lista-contatos">Voltar</a>
+                </button>
+            </div>
         </section>
         <section class="cabecalho-contato">
             <img src="../../../assets/adicionar-contato.png" alt="">
@@ -15,6 +15,22 @@
         </section>
     </header>
     <form [formGroup]="contatoForm" (ngSubmit)="salvarContato()">
+        <div role="button" class="imagem-contato">
+            <i class="material-icons">add</i>
+            <label for="avatar">Adicione a imagem do contato</label>
+            <input 
+                type="file" 
+                accept="image/*" 
+                id="avatar" 
+                required
+                (change)="aoSelecionarArquivo($event)">
+        </div>
+        <!-- Pega o valor da propriedade avatar e se tiver valor (img convertida) que seja reenderizada -->
+        @if(contatoForm.get('avatar')?.value !== '') {
+            <figure>
+                <img [src]="contatoForm.get('avatar')?.value" alt="Avatar do contato">
+            </figure>
+        }
         <label for="nome">Nome</label>
         <input type="text" id="nome" placeholder="Digite o nome do contato" formControlName="nome">
         @if (contatoForm.get('nome')?.errors && contatoForm.get('nome')?.touched) {
@@ -60,10 +76,8 @@
 
         <section class="botoes">
             <button (click)="cancelar()" class="botao-cancelar" type="button">Cancelar</button>
-            <button 
-            [disabled]="contatoForm.invalid"
-            [ngClass]="contatoForm.valid ? 'botao-salvar' : 'botao-desabilitado'" 
-            type="submit">
+            <button [disabled]="contatoForm.invalid"
+                [ngClass]="contatoForm.valid ? 'botao-salvar' : 'botao-desabilitado'" type="submit">
                 Salvar contato
             </button>
         </section>

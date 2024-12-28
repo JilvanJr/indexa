@@ -38,6 +38,7 @@ export class FormularioContatoComponent implements OnInit{
   inicializarFormulario() {
     this.contatoForm = new FormGroup({
       nome: new FormControl('', Validators.required),
+      avatar: new FormControl('', Validators.required),
       telefone: new FormControl('', Validators.required),
       email: new FormControl('', [Validators.required, Validators.email]),
       aniversario: new FormControl(''),
@@ -66,7 +67,27 @@ export class FormularioContatoComponent implements OnInit{
     });
   }
 
+  // metodo chamado assim que a pessoa selecionar a caixa de seleção e seleciona uma imagem
+  aoSelecionarArquivo(event: any) {
+    const file: File = event.target.files[0]
+    if (file) {
+      this.lerAquivo(file) // chama esse metodo
+    }
+  }
+
+  // esse método lê o arquivo
+  lerAquivo(file: File) {
+    const reader = new FileReader(); // instancia responsavel pela leitura
+    reader.onload = () => {
+      if (reader.result) { // dando tudo certo com a leitura
+        this.contatoForm.get('avatar')?.setValue(reader.result) // vamos setar o valor recebido dentro da propriedade avatar (nome do campo)
+      }
+    }
+    reader.readAsDataURL(file) // e fazer a conversão
+  } 
+
   cancelar() {
     this.contatoForm.reset();
+    this.router.navigateByUrl('/lista-contatos')
   }
 }
