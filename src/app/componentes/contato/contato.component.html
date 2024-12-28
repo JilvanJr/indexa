@@ -6,8 +6,10 @@
         <li>{{ telefone }}</li>
         <li>
             <button>
-                <img src="../../../assets/pencil-square.png" class="">
-                <img src="../../../assets/trash.png" class="">
+                <img src="../../../assets/pencil-square.png" alt="">
+            </button>
+            <button [routerLink]="['/perfil-contato', id]">
+                <img src="../../../assets/trash.png" alt="">
             </button>
         </li>
     </ul>
